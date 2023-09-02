@@ -1,0 +1,25 @@
+{
+  "name": "oxalate-transformer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "out/index.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "types": "out/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "typescript": "4.9.4"
+  },
+  "dependencies": {
+    "@types/node": "^20.5.7",
+    "ts-expose-internals": "4.9.4",
+    "ts-transformer-testing-library": "^1.0.0-alpha.7"
+  }
+}
