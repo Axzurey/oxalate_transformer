@@ -92,10 +92,19 @@ function visitNonNull(context: TransformContext, node: ts.NonNullExpression) {
             for (let subchild of child.getChildren()) {
                 if (ts.isPropertyAccessExpression(subchild)) {
                     let [left, right] = [subchild.getChildAt(0) as ts.Identifier, subchild.getChildAt(1) as ts.Identifier];
+
+					let typechecker = context.program.getTypeChecker();
+
+					let type = typechecker.getTypeAtLocation(left);
+
+					if (!type) return context.transform(node);
+					
+					if (type.symbol.getEscapedName() !== "Result" && type.symbol.getEscapedName() !== "Option") return context.transform(node);
+
 					return factory.createIfStatement(
 						factory.createCallExpression(
 							factory.createPropertyAccessExpression(
-								left, "is_none"
+								left, type.symbol.getEscapedName() === "Option" ? "is_none" : "is_err"
 							), undefined, []
 						),
 						factory.createBlock(
